@@ -3,6 +3,7 @@ package com.cibeg.cibreserve;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,11 +32,15 @@ public class SignupActivity extends AppCompatActivity {
     @BindView(R.id.btn_signup) Button _signupButton;
     @BindView(R.id.link_login) TextView _loginLink;
 
+    //FireBase Authentication Field
+    private FirebaseAuth LoginAuth;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
+        LoginAuth = FirebaseAuth.getInstance();
 
         try {
             getSupportActionBar().hide();
@@ -62,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
                 finish();
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
     }
@@ -85,14 +95,38 @@ public class SignupActivity extends AppCompatActivity {
 
         String name = _nameText.getText().toString();
         String address = _addressText.getText().toString();
-        String email = _emailText.getText().toString();
+        final String email = _emailText.getText().toString();
         String mobile = _mobileText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
 
-        new android.os.Handler().postDelayed(
+            LoginAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if(!task.isSuccessful())
+                            {
+                                Toast.makeText(getBaseContext(), "Error: "+task.getException(), Toast.LENGTH_LONG).show();
+                            }
+                            else
+                            {
+                                Toast.makeText(getBaseContext(), "You have been registered successfully", Toast.LENGTH_LONG).show();
+
+                                // TODO: Store clients data in the FireBase Database
+
+
+
+                                onSignupSuccess(email, password);
+
+                            }
+
+                        }
+                    });
+
+        /*new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
@@ -101,13 +135,16 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                }, 3000);*/
     }
 
 
-    public void onSignupSuccess() {
+    public void onSignupSuccess(String email, String password) {
         _signupButton.setEnabled(true);
-        setResult(RESULT_OK, null);
+        Intent data = new Intent();
+        data.addCategory(email);
+        data.addCategory(password);
+        setResult(RESULT_OK,data);
         finish();
     }
 
@@ -149,7 +186,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (mobile.isEmpty() || mobile.length()!=10) {
+        if (mobile.isEmpty() || mobile.length()!=11) {
             _mobileText.setError("Enter Valid Mobile Number");
             valid = false;
         } else {
