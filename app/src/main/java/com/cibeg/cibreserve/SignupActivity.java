@@ -40,13 +40,15 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
-        LoginAuth = FirebaseAuth.getInstance();
+
 
         try {
             getSupportActionBar().hide();
         }catch (Exception e){
             Log.d("actionbar", e.getMessage());
         }
+
+        LoginAuth = FirebaseAuth.getInstance();
 
         _signupButton = findViewById(R.id.btn_signup);
         _passwordText = findViewById(R.id.input_password);
@@ -72,7 +74,7 @@ public class SignupActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
                 finish();
-                //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
     }
@@ -144,12 +146,12 @@ public class SignupActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.addCategory(email);
         data.addCategory(password);
-        setResult(RESULT_OK,data);
+        setResult(RESULT_OK, data);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Wrong sign up data", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -164,8 +166,8 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+        if (name.isEmpty() || name.length() < 5) {
+            _nameText.setError("at least 5 characters");
             valid = false;
         } else {
             _nameText.setError(null);
@@ -180,7 +182,7 @@ public class SignupActivity extends AppCompatActivity {
 
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("enter a valid email address");
+            _emailText.setError("Enter a valid email address");
             valid = false;
         } else {
             _emailText.setError(null);
@@ -193,15 +195,15 @@ public class SignupActivity extends AppCompatActivity {
             _mobileText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 8 || password.length() > 16) {
+            _passwordText.setError("must be between 8 and 16 alphanumeric characters");
             valid = false;
-        } else {
+        } else{
             _passwordText.setError(null);
         }
 
-        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
-            _reEnterPasswordText.setError("Password Do not match");
+        if (reEnterPassword.isEmpty() ||  !(reEnterPassword.equals(password))) {
+            _reEnterPasswordText.setError("Password don't match");
             valid = false;
         } else {
             _reEnterPasswordText.setError(null);

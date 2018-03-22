@@ -41,18 +41,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        LoginAuth = FirebaseAuth.getInstance();
-
-        if(LoginAuth.getCurrentUser() != null)
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-
 
         try {
             getSupportActionBar().hide();
         }catch (Exception e){
             Log.d("actionbar", e.getMessage());
         }
+
+
+        LoginAuth = FirebaseAuth.getInstance();
+
+        if(LoginAuth.getCurrentUser() != null)
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
 
         _loginButton = findViewById(R.id.btn_login);
         _passwordText = findViewById(R.id.input_password);
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), SignupActivity.class);
 
                 startActivityForResult(intent, REQUEST_SIGNUP);
-                //overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             }
         });
     }
@@ -127,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                 // TODO: Implement successful signup logic here
                 // By default we just finish the Activity and log them in automatically
 
-                Object[] Info = new Object[2];
+                Object[] Info;
                 Info = data.getCategories().toArray();
                 LoginAuth.signInWithEmailAndPassword(Info[0].toString(), Info[1].toString());
 
@@ -150,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Please submit the data according to the requirements", Toast.LENGTH_LONG).show();
 
         _loginButton.setEnabled(true);
     }
@@ -168,8 +169,8 @@ public class LoginActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 8 || password.length() > 16) {
+            _passwordText.setError("must be between 8 and 16 alphanumeric characters");
             valid = false;
         } else {
             _passwordText.setError(null);

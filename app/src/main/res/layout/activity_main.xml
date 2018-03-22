@@ -17,16 +17,6 @@
         android:textSize="20sp"
          />
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="52dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_next"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_margin="40dp" />
 
 
 </LinearLayout>
