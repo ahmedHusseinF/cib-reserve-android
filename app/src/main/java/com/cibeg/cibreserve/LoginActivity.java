@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         _signupLink = findViewById(R.id.link_signup);
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 login();
