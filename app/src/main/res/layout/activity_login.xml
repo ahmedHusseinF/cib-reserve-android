@@ -4,13 +4,14 @@
     android:theme="@style/AppTheme.Light"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:gravity="center"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="70dp"
+        android:paddingTop="100dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
@@ -33,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
@@ -48,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 

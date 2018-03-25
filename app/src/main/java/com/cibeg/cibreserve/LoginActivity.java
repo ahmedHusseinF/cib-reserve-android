@@ -3,7 +3,6 @@ package com.cibeg.cibreserve;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -52,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginAuth = FirebaseAuth.getInstance();
 
         if(LoginAuth.getCurrentUser() != null)
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
 
 
         _loginButton = findViewById(R.id.btn_login);
@@ -82,6 +81,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public void login() {
         Log.d(TAG, "Login");
+
+        // debug purpose only
+        onLoginSuccess();
+
 
         if (!validate()) {
             onLoginFailed();
@@ -140,13 +143,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Disable going back to the MainActivity
+        // Disable going back to the BranchesActivity
         moveTaskToBack(true);
     }
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
         finish();
     }
 
