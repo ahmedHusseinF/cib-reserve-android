@@ -16,6 +16,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +38,9 @@ public class SignupActivity extends AppCompatActivity {
     //FireBase Authentication Field
     private FirebaseAuth LoginAuth;
 
+    //DataBase Field
+    private DatabaseReference DataBase;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +55,7 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         LoginAuth = FirebaseAuth.getInstance();
+        DataBase = FirebaseDatabase.getInstance().getReference();
 
         _signupButton = findViewById(R.id.btn_signup);
         _passwordText = findViewById(R.id.input_password);
@@ -95,10 +102,10 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String address = _addressText.getText().toString();
+        final String name = _nameText.getText().toString();
+        final String address = _addressText.getText().toString();
         final String email = _emailText.getText().toString();
-        String mobile = _mobileText.getText().toString();
+        final String mobile = _mobileText.getText().toString();
         final String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
@@ -118,9 +125,9 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "You have been registered successfully", Toast.LENGTH_LONG).show();
 
                                 // TODO: Store clients data in the FireBase Database
+                                User user = new User(name, email, address, mobile);
 
-
-
+                                DataBase.child("Users").child(LoginAuth.getCurrentUser().getUid()).setValue(user);
                                 onSignupSuccess(email, password);
 
                             }
@@ -128,16 +135,6 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
 
-        /*new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);*/
     }
 
 
