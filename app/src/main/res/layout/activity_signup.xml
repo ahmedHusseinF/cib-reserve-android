@@ -31,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Name" />
         </android.support.design.widget.TextInputLayout>
 
@@ -45,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPostalAddress"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Address" />
         </android.support.design.widget.TextInputLayout>
 
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
@@ -75,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:inputType="number"
                 android:hint="Mobile Number" />
         </android.support.design.widget.TextInputLayout>
@@ -90,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -104,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:backgroundTint="@color/black"
+                android:textColor="@color/black"
                 android:hint="Re-enter Password"/>
         </android.support.design.widget.TextInputLayout>
 
