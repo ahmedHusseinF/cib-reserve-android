@@ -13,12 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +45,7 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth LoginAuth;
 
     //DataBase Field
-    private DatabaseReference DataBase;
+    private FirebaseFirestore DataBase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,9 @@ public class SignupActivity extends AppCompatActivity {
         }
 
         LoginAuth = FirebaseAuth.getInstance();
-        DataBase = FirebaseDatabase.getInstance().getReference();
+        DataBase = FirebaseFirestore.getInstance();
+
+
 
         _signupButton = findViewById(R.id.btn_signup);
         _passwordText = findViewById(R.id.input_password);
@@ -125,9 +133,29 @@ public class SignupActivity extends AppCompatActivity {
                                 Toast.makeText(getBaseContext(), "You have been registered successfully", Toast.LENGTH_LONG).show();
 
                                 // TODO: Store clients data in the FireBase Database
-                                User user = new User(name, email, address, mobile);
+                               Map<String, Object> NewClient =new HashMap<>();
+                               NewClient.put("name", name);
+                               NewClient.put("address", address);
+                               NewClient.put("email", email);
+                               NewClient.put("mobile", mobile);
+                               DataBase.collection("Users").document(email)
+                                       .set(NewClient)
+                                       .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void aVoid) {
+                                               Toast.makeText(getBaseContext(), "You have been registered successfully", Toast.LENGTH_LONG).show();
 
-                                DataBase.child("Users").child(LoginAuth.getCurrentUser().getUid()).setValue(user);
+                                           }
+                                       })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getBaseContext(), "Error: "+e, Toast.LENGTH_LONG).show();
+                                                finish();
+                                            }
+                                        });
+
+
                                 onSignupSuccess(email, password);
 
                             }
