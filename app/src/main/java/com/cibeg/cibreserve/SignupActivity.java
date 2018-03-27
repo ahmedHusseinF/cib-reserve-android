@@ -86,10 +86,9 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
-                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-                finish();
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
             }
         });
     }
@@ -115,7 +114,6 @@ public class SignupActivity extends AppCompatActivity {
         final String email = _emailText.getText().toString();
         final String mobile = _mobileText.getText().toString();
         final String password = _passwordText.getText().toString();
-        String reEnterPassword = _reEnterPasswordText.getText().toString();
 
         // TODO: Implement your own signup logic here.
 
@@ -127,6 +125,7 @@ public class SignupActivity extends AppCompatActivity {
                             if(!task.isSuccessful())
                             {
                                 Toast.makeText(getBaseContext(), "Error: "+task.getException(), Toast.LENGTH_LONG).show();
+                                _signupButton.setEnabled(true);
                             }
                             else
                             {
@@ -144,17 +143,18 @@ public class SignupActivity extends AppCompatActivity {
                                            @Override
                                            public void onSuccess(Void aVoid) {
                                                Toast.makeText(getBaseContext(), "You have been registered successfully", Toast.LENGTH_LONG).show();
-
+                                               overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                                               startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                                               finish();
                                            }
                                        })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Toast.makeText(getBaseContext(), "Error: "+e, Toast.LENGTH_LONG).show();
-                                                finish();
+                                                _signupButton.setEnabled(true);
                                             }
                                         });
-
 
                                 onSignupSuccess(email, password);
 
@@ -177,7 +177,6 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Wrong sign up data", Toast.LENGTH_LONG).show();
-
         _signupButton.setEnabled(true);
     }
 
