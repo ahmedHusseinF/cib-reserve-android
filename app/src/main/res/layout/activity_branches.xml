@@ -67,7 +67,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
-        android:backgroundTint="@color/accent_darker"
         android:src="@drawable/ic_navigate_next_black_24px"
         app:fabSize="normal"
         app:rippleColor="@color/accent"
