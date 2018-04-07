@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="100dp"
+    android:paddingTop="30dp"
     tools:context="com.cibeg.cibreserve.BranchesActivity">
 
     <ImageView
@@ -20,16 +20,52 @@
 
 
     <TextView
-        android:id="@+id/bank_text"
+        android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="Select date you want to reserve"
+    android:id="@+id/txtDate"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="6dp"
+    android:gravity="center"
+        android:textColor="#3F51B5"
+        android:layout_below="@id/logo"
+    android:textSize="20dp" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/primary"
-        android:layout_below="@id/logo"
-        android:textSize="20sp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
+        android:text="set date"
+        android:id="@+id/SetDate"
+        android:layout_below="@id/txtDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:textStyle="bold"
         />
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Select process"
+        android:id="@+id/process_type"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="#3F51B5"
+        android:layout_below="@id/SetDate"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentLeft="true"
+        android:textSize="20dp" />
+    <Spinner
+        android:id="@+id/process_spinner"
+        android:layout_below="@id/process_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+    </Spinner>
 
 </RelativeLayout>
+
+
+

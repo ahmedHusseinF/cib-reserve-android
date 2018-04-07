@@ -9,6 +9,8 @@
     android:layout_marginEnd="@dimen/main_card_margin_horizontal"
     android:layout_marginStart="@dimen/main_card_margin_horizontal"
     android:layout_marginTop="@dimen/main_card_margin_vertical"
+    card_view:cardCornerRadius="@dimen/card_recycler_corner_radius"
+    card_view:cardElevation="@dimen/card_recycler_elevation"
     >
 
     <RelativeLayout
