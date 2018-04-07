@@ -6,7 +6,7 @@ import android.util.Log;
 
 public class ProcessActivity extends AppCompatActivity {
 
-    private static final String TAG = "Process";
+    private static final String TAG = "ProcessActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,5 +18,7 @@ public class ProcessActivity extends AppCompatActivity {
         }catch (Exception e){
             Log.d(TAG, "Can't hide the bar");
         }
+
+        
     }
 }
