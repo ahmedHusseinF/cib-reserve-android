@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="30dp"
+    android:paddingTop="100dp"
     tools:context="com.cibeg.cibreserve.BranchesActivity">
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Select date you want to reserve"
+    android:text="Select date you want to reserve Except(Friday,Saturday)"
     android:id="@+id/txtDate"
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="6dp"
