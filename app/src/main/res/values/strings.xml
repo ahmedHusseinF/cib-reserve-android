@@ -5,8 +5,7 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="Banks">
-        <item>CIB Bank</item>
-
+        <item>CIB EG</item>
     </string-array>
 
 
