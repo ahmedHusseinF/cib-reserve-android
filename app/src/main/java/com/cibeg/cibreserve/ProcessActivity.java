@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -79,7 +80,7 @@ public class ProcessActivity extends AppCompatActivity {
                     Adds the given amount to a Calendar field.
              */
             // Add 3 days to Calendar
-            calendar.add(Calendar.DATE, 3);
+            calendar.add(Calendar.DATE, 6);
 
             /*
                 getTimeInMillis()
@@ -135,8 +136,10 @@ public class ProcessActivity extends AppCompatActivity {
             // Format the date using style full
             DateFormat df_full = DateFormat.getDateInstance(DateFormat.FULL);
             String df_full_str = df_full.format(chosenDate);
-
-            if(day==6||day==7)
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+            Date d_name = chosenDate;
+            String dayOfTheWeek = sdf.format(d_name);
+            if(dayOfTheWeek.equals("Friday") || dayOfTheWeek.equals("Saturday"))
             {
                 tv.setText("Please choose any date except(Friday,Saturday)");
                 tv.setTextColor(Color.parseColor("#FF8F00"));
@@ -147,7 +150,7 @@ public class ProcessActivity extends AppCompatActivity {
             {
                 // Display the formatted date
                 tv.setTextColor(Color.parseColor("#3F51B5"));
-                tv.setText("Choosen date:" +  "\n");
+                tv.setText("Choosen date:"  + "\n");
                 tv.setText(tv.getText() + df_full_str);
             }
         }
