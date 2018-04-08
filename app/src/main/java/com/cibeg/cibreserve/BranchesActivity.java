@@ -66,8 +66,7 @@ public class BranchesActivity extends AppCompatActivity {
 
                 BankSelected[0]= adapterView.getItemAtPosition(pos).toString();
                 DataBase.collection(BankSelected[0])
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -80,6 +79,8 @@ public class BranchesActivity extends AppCompatActivity {
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
+
+
                             }
                         });
             }

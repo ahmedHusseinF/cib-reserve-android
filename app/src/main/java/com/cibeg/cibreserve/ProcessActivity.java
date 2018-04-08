@@ -141,8 +141,9 @@ public class ProcessActivity extends AppCompatActivity {
             String dayOfTheWeek = sdf.format(d_name);
             if(dayOfTheWeek.equals("Friday") || dayOfTheWeek.equals("Saturday"))
             {
-                tv.setText("Please choose any date except(Friday,Saturday)");
-                tv.setTextColor(Color.parseColor("#FF8F00"));
+                tv.setText("Choose any date except(Friday,Saturday)");
+                tv.setTextColor(Color.parseColor("#D50000"));
+                tv.setTextSize(12);
 
             }
 
@@ -150,6 +151,7 @@ public class ProcessActivity extends AppCompatActivity {
             {
                 // Display the formatted date
                 tv.setTextColor(Color.parseColor("#3F51B5"));
+                tv.setTextSize(20);
                 tv.setText("Choosen date:"  + "\n");
                 tv.setText(tv.getText() + df_full_str);
             }
