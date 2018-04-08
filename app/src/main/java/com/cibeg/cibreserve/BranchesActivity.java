@@ -110,8 +110,6 @@ public class BranchesActivity extends AppCompatActivity {
                 BankBranches);
         s_branches.setEnabled(true);
         s_branches.setAdapter(Adapter);
-
-
     }
 
 
