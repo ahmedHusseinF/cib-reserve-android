@@ -6,24 +6,33 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ProcessActivity extends AppCompatActivity {
     private FirebaseFirestore DataBase;
     ArrayList<String> process = new ArrayList<>();
-
+    Spinner s_process;
 
     private static final String TAG = "Process";
     public static TextView date_text;
@@ -33,12 +42,45 @@ public class ProcessActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process);
 
-        try {
+       try {
             getSupportActionBar().hide();
         } catch (Exception e) {
             Log.d(TAG, "Can't hide the bar");
         }
 
+        DataBase = FirebaseFirestore.getInstance();
+        s_process = findViewById(R.id.process_spinner);
+        s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+
+                Spinner spinner1 =findViewById(R.id.banks_spinner);
+                String text1 = spinner1.getSelectedItem().toString();
+                Spinner spinner2 = findViewById(R.id.branches_spinner);
+                String text2 = spinner2.getSelectedItem().toString();
+                DataBase.collection("CIB EG").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                process.add(document.getId());
+                            }
+                            getprocess(process);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // have to be implemented to create an OnItemSelectedListener
+            }
+        });
 
         date_text = findViewById(R.id.txtDate);
 
@@ -53,6 +95,16 @@ public class ProcessActivity extends AppCompatActivity {
             }
         });
     }
+
+    public final void getprocess(List<String> processes)
+    {
+        ArrayAdapter Adapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                processes);
+
+        s_process.setAdapter(Adapter);
+    }
+
 
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -144,7 +196,6 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setText("Choose any date except(Friday,Saturday)");
                 tv.setTextColor(Color.parseColor("#D50000"));
                 tv.setTextSize(12);
-
             }
 
             else

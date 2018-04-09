@@ -19,6 +19,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
 public class BranchesActivity extends AppCompatActivity {
     private static String  TAG = "BranchesActivity";
     //DataBase Field
@@ -57,16 +59,15 @@ public class BranchesActivity extends AppCompatActivity {
 
 
         s_branches.setEnabled(false); // disable the branches list until we get the data
-
-
-        final String[] BankSelected=new String[1];
         s_banks.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
-                BankSelected[0]= adapterView.getItemAtPosition(pos).toString();
-                DataBase.collection(BankSelected[0])
-                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+
+                Spinner spinner = findViewById(R.id.banks_spinner);
+                String bankselected = spinner.getSelectedItem().toString();
+                DataBase.collection(bankselected).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
@@ -101,6 +102,10 @@ public class BranchesActivity extends AppCompatActivity {
                 startActivity(new Intent(BranchesActivity.this, ProcessActivity.class));
             }
         });
+
+
+
+
     }
     public final void getbranch(List<String> BankBranches)
     {
@@ -109,6 +114,7 @@ public class BranchesActivity extends AppCompatActivity {
                 BankBranches);
         s_branches.setEnabled(true);
         s_branches.setAdapter(Adapter);
+
     }
 
 
