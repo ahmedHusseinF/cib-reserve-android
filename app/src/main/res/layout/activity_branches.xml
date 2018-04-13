@@ -59,6 +59,17 @@
         android:layout_marginTop="30dp"
         >
     </Spinner>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/text_branchesparameters"
+        android:layout_marginStart="6dp"
+        android:textColor="#F57C00"
+        android:layout_below="@id/branches_spinner"
+        android:layout_marginLeft="20dp"
+
+        android:textSize="14dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

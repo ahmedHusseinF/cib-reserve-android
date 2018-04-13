@@ -70,6 +70,16 @@
         android:layout_marginBottom="10dp"
         >
     </Spinner>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/text_process"
+        android:layout_marginStart="6dp"
+        android:textColor="#F57C00"
+        android:layout_below="@id/process_spinner"
+        android:textSize="14dp" />
+
 
 </RelativeLayout>
 

@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,6 +28,7 @@ public class BranchesActivity extends AppCompatActivity {
     private static String  TAG = "BranchesActivity";
     //DataBase Field
     private FirebaseFirestore DataBase;
+    private DatabaseReference mDatabase;
     ArrayList<String> BankBranches=new ArrayList<>();
     Spinner s_branches;
     Spinner s_banks;
@@ -92,9 +96,55 @@ public class BranchesActivity extends AppCompatActivity {
             }
         });
 
+        s_branches.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
 
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+                Spinner spinner = findViewById(R.id.branches_spinner);
+                String selectedbranch = spinner.getSelectedItem().toString();
+
+
+// ..
+                DataBase = FirebaseFirestore.getInstance();
+                DocumentReference docRef = DataBase.collection("CIB EG").document(selectedbranch);
+
+
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                              BranchParameters BParam=new BranchParameters();
+                                BParam.Address = (String) document.get("Address");
+                                BParam.Area=(String) document.get("Area");
+                                BParam.City=(String) document.get("City");
+                                BParam.Working_Days=(String) document.get("Working Days");
+                                BParam.Working_Hours=(String) document.get("Working Hours");
+                                TextView tv = findViewById(R.id.text_branchesparameters);
+                                tv.setText("Address:" +BParam.Address + "\n" + "Area:" + BParam.Area + "\n" + "City:" +BParam.City +
+                                 "\n" + "Working Days:" + BParam.Working_Days +"\n" +"Working Hours:"+BParam.Working_Hours );
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+            }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                    // have to be implemented to create an OnItemSelectedListener
+                }
+            });
+
+
+            findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // next up to next activity

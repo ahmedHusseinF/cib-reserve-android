@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -31,8 +33,10 @@ import java.util.List;
 
 public class ProcessActivity extends AppCompatActivity {
     private FirebaseFirestore DataBase;
+    private DatabaseReference mDatabase;
     ArrayList<String> process = new ArrayList<>();
     Spinner s_process;
+    Services pp=new Services();
 
     private static final String TAG = "Process";
     public static TextView date_text;
@@ -50,30 +54,65 @@ public class ProcessActivity extends AppCompatActivity {
 
         DataBase = FirebaseFirestore.getInstance();
         s_process = findViewById(R.id.process_spinner);
-        s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
-                Spinner spinner1 =findViewById(R.id.banks_spinner);
-                String text1 = spinner1.getSelectedItem().toString();
-                Spinner spinner2 = findViewById(R.id.branches_spinner);
-                String text2 = spinner2.getSelectedItem().toString();
-                DataBase.collection("CIB EG").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                process.add(document.getId());
-                            }
-                            getprocess(process);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
+        DataBase.collection("Services").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        process.add(document.getId());
+
+
 
 
                     }
+                    getprocess(process);
+                    //s_process.setEnabled(true);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+
+
+            }
+        });
+       s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+
+
+                Spinner spinner = findViewById(R.id.process_spinner);
+                String selectedprocess = spinner.getSelectedItem().toString();
+
+
+// ..
+         DataBase=FirebaseFirestore.getInstance();
+                DocumentReference docRef = DataBase.collection("Services").document(selectedprocess);
+
+
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                Services name =new Services();
+                                name.Information=(String)document.get("Information");
+                                TextView tv = findViewById(R.id.text_process);
+                                tv.setText(name.Information);
+
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
                 });
+
+
             }
 
             @Override
@@ -81,6 +120,7 @@ public class ProcessActivity extends AppCompatActivity {
                 // have to be implemented to create an OnItemSelectedListener
             }
         });
+
 
         date_text = findViewById(R.id.txtDate);
 
@@ -98,11 +138,9 @@ public class ProcessActivity extends AppCompatActivity {
 
     public final void getprocess(List<String> processes)
     {
-        ArrayAdapter Adapter = new ArrayAdapter(this,
-                android.R.layout.simple_spinner_dropdown_item,
-                processes);
-
+        ArrayAdapter Adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, processes);
         s_process.setAdapter(Adapter);
+
     }
 
 
