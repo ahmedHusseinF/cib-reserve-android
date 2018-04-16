@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.cibeg.cibreserve.BranchesActivity">
 
 
@@ -15,6 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="72dp"
         android:layout_marginBottom="24dp"
+        android:layout_marginTop="100dp"
         android:layout_gravity="center_horizontal" />
 
 
@@ -79,6 +81,26 @@
         android:textColor="#F57C00"
         android:layout_below="@id/process_spinner"
         android:textSize="14dp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonProcess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/accent"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabProcess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        app:backgroundTint="@color/accent"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_navigate_next_black_24px"
+        app:fabSize="normal"
+        android:layout_margin="25dp" />
 
 
 </RelativeLayout>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +27,6 @@ public class BranchesActivity extends AppCompatActivity {
     private static String  TAG = "BranchesActivity";
     //DataBase Field
     private FirebaseFirestore DataBase;
-    private DatabaseReference mDatabase;
     ArrayList<String> BankBranches=new ArrayList<>();
     Spinner s_branches;
     Spinner s_banks;
@@ -152,6 +150,17 @@ public class BranchesActivity extends AppCompatActivity {
                 startActivity(new Intent(BranchesActivity.this, ProcessActivity.class));
             }
         });
+
+/*
+        findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next activity
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(BranchesActivity.this,ProcessActivity.class));
+            }
+        });
+        */
 
 
 

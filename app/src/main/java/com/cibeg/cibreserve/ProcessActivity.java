@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,10 +32,8 @@ import java.util.List;
 
 public class ProcessActivity extends AppCompatActivity {
     private FirebaseFirestore DataBase;
-    private DatabaseReference mDatabase;
     ArrayList<String> process = new ArrayList<>();
-    Spinner s_process;
-    Services pp=new Services();
+   static Spinner s_process;
 
     private static final String TAG = "Process";
     public static TextView date_text;
@@ -54,6 +51,7 @@ public class ProcessActivity extends AppCompatActivity {
 
         DataBase = FirebaseFirestore.getInstance();
         s_process = findViewById(R.id.process_spinner);
+        s_process.setEnabled(false);
 
         DataBase.collection("Services").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
         {
@@ -134,6 +132,25 @@ public class ProcessActivity extends AppCompatActivity {
 
             }
         });
+       /* findViewById(R.id.fabProcess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next activity
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(ProcessActivity.this, ProcessActivity.class));
+            }
+        });
+
+
+        findViewById(R.id.imageButtonProcess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next activity
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(ProcessActivity.this,ProcessActivity.class));
+            }
+        });
+        */
     }
 
     public final void getprocess(List<String> processes)
@@ -231,9 +248,11 @@ public class ProcessActivity extends AppCompatActivity {
             String dayOfTheWeek = sdf.format(d_name);
             if(dayOfTheWeek.equals("Friday") || dayOfTheWeek.equals("Saturday"))
             {
-                tv.setText("Choose any date except(Friday,Saturday)");
-                tv.setTextColor(Color.parseColor("#D50000"));
+                tv.setText("!!! Choose any date except(Friday,Saturday)");
+                tv.setTextColor(Color.parseColor("#F57C00"));
                 tv.setTextSize(12);
+                s_process.setEnabled(false);
+
             }
 
             else
@@ -243,8 +262,10 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setTextSize(20);
                 tv.setText("Choosen date:"  + "\n");
                 tv.setText(tv.getText() + df_full_str);
+                s_process.setEnabled(true);
             }
         }
     }
+
 }
 

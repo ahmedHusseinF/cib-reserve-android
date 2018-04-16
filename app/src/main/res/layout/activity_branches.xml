@@ -6,10 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="100dp"
+
     tools:context="com.cibeg.cibreserve.BranchesActivity">
 
     <ImageView
+        android:layout_marginTop="100dp"
         android:id="@+id/logo"
         android:src="@drawable/logo"
         android:layout_width="wrap_content"
@@ -77,10 +78,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        app:backgroundTint="@color/accent"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_navigate_next_black_24px"
         app:fabSize="normal"
-        app:rippleColor="@color/accent"
         android:layout_margin="25dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@color/accent"
+        app:srcCompat="@android:drawable/ic_menu_manage" />
+
 
 </RelativeLayout>
