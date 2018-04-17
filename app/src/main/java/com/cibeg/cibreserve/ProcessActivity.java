@@ -34,6 +34,7 @@ public class ProcessActivity extends AppCompatActivity {
     private FirebaseFirestore DataBase;
     ArrayList<String> process = new ArrayList<>();
    static Spinner s_process;
+   static boolean ChosenDateisRight=false;
 
     private static final String TAG = "Process";
     public static TextView date_text;
@@ -42,7 +43,7 @@ public class ProcessActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process);
-
+         ChosenDateisRight=false;
        try {
             getSupportActionBar().hide();
         } catch (Exception e) {
@@ -92,7 +93,7 @@ public class ProcessActivity extends AppCompatActivity {
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
+                        if (task.isSuccessful()&&ChosenDateisRight) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null && document.exists()) {
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
@@ -103,9 +104,11 @@ public class ProcessActivity extends AppCompatActivity {
 
                             } else {
                                 Log.d(TAG, "No such document");
+
                             }
                         } else {
                             Log.d(TAG, "get failed with ", task.getException());
+
                         }
                     }
                 });
@@ -252,6 +255,11 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setTextColor(Color.parseColor("#F57C00"));
                 tv.setTextSize(12);
                 s_process.setEnabled(false);
+                ChosenDateisRight=false;
+                TextView tv1 = getActivity().findViewById(R.id.text_process);
+                tv1.setText("");
+
+
 
             }
 
@@ -263,6 +271,7 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setText("Choosen date:"  + "\n");
                 tv.setText(tv.getText() + df_full_str);
                 s_process.setEnabled(true);
+                ChosenDateisRight=true;
             }
         }
     }
