@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         // debug purpose only
-        onLoginSuccess();
+//        onLoginSuccess();
 
 
         if (!validate()) {

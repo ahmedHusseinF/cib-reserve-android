@@ -159,6 +159,7 @@ public class BranchesActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 startActivity(new Intent(BranchesActivity.this,ProcessActivity.class));
             }
+
         });
         */
 
