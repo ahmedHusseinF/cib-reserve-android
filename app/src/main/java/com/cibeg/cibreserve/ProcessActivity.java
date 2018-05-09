@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,6 +51,15 @@ public class ProcessActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, "Can't hide the bar");
         }
+
+        findViewById(R.id.fabProcess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next slots activity
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(ProcessActivity.this, SlotsActivity.class));
+            }
+        });
 
         DataBase = FirebaseFirestore.getInstance();
         s_process = findViewById(R.id.process_spinner);

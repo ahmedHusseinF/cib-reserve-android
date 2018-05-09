@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginAuth = FirebaseAuth.getInstance();
 
+
         if(LoginAuth.getCurrentUser() != null)
             startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
 
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         // debug purpose only
-        onLoginSuccess();
+        //onLoginSuccess();
 
 
         if (!validate()) {
