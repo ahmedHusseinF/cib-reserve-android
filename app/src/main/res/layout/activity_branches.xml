@@ -78,19 +78,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        app:backgroundTint="@color/accent"
+        app:backgroundTint="#F57C00"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_navigate_next_black_24px"
         app:fabSize="normal"
         android:layout_margin="25dp" />
 
+
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/EditButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#F57C00"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@color/accent"
-        app:srcCompat="@android:drawable/ic_menu_manage" />
+        android:layout_toEndOf="@+id/bank_text"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
 
 </RelativeLayout>

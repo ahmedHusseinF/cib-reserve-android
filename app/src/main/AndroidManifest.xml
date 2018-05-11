@@ -23,6 +23,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".ProcessActivity" />
         <activity android:name=".SlotsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ChangePassword" />
     </application>
 
 </manifest>

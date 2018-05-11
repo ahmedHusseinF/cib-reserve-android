@@ -8,18 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +43,19 @@ public class BranchesActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             Log.d(TAG, "Can't hide the bar");
         }
+
+        // Go to Setting when the user clicks on the edit button
+        ImageButton B = findViewById(R.id.EditButton);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(BranchesActivity.this, SettingsActivity.class));
+                finish();
+
+            }
+        });
 
         DataBase = FirebaseFirestore.getInstance();
 
