@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,7 +37,8 @@ public class ProcessActivity extends AppCompatActivity {
    static Spinner s_process;
    static boolean ChosenDateisRight=false;
 
-    private static final String TAG = "Process";
+
+    private static final String TAG = "ProcessActivity";
     public static TextView date_text;
 
     @Override
@@ -49,6 +51,15 @@ public class ProcessActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.d(TAG, "Can't hide the bar");
         }
+
+        findViewById(R.id.fabProcess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next slots activity
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(ProcessActivity.this, SlotsActivity.class));
+            }
+        });
 
         DataBase = FirebaseFirestore.getInstance();
         s_process = findViewById(R.id.process_spinner);
@@ -123,6 +134,19 @@ public class ProcessActivity extends AppCompatActivity {
         });
 
 
+
+        Spinner s_process = findViewById(R.id.process_spinner);
+
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Banks, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        s_process.setAdapter(adapter);
+
+
         date_text = findViewById(R.id.txtDate);
 
         findViewById(R.id.SetDate).setOnClickListener(new View.OnClickListener() {
@@ -166,6 +190,7 @@ public class ProcessActivity extends AppCompatActivity {
 
 
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -226,7 +251,7 @@ public class ProcessActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the chosen date
-            TextView tv = (TextView) getActivity().findViewById(R.id.txtDate);
+            TextView tv = getActivity().findViewById(R.id.txtDate);
             int actualMonth = month+1; // Because month index start from zero
             // Display the unformatted date to TextView
 
