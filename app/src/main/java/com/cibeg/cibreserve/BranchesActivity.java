@@ -146,7 +146,13 @@ public class BranchesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // next up to next activity
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                startActivity(new Intent(BranchesActivity.this, ProcessActivity.class));
+
+                startActivity(new Intent(BranchesActivity.this,ProcessActivity.class));
+            }
+
+        });
+        
+
 
 
                 s_branches.setEnabled(false); // disable the branches list until we get the data
