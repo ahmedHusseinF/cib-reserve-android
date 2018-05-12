@@ -150,6 +150,9 @@ public class BranchesActivity extends AppCompatActivity {
                 Spinner spinner = findViewById(R.id.branches_spinner);
                 String selectedBranch = spinner.getSelectedItem().toString();
 
+
+                s_branches.setEnabled(false); // disable the branches list until we get the data
+
                 edit.putString("branch", selectedBranch);
 
                 if(edit.commit()) {
