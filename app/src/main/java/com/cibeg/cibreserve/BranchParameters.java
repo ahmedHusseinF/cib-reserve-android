@@ -6,12 +6,12 @@ package com.cibeg.cibreserve;
 
 public class BranchParameters {
     public String Address;
-    public String  Area;
+    public String Area;
     public String City;
     public String Working_Days;
     public String Working_Hours;
-  public BranchParameters()
-  {
 
-  }
+    public BranchParameters() {
+
+    }
 }

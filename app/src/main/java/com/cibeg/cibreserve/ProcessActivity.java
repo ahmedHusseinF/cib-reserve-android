@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,50 +35,64 @@ import java.util.List;
 public class ProcessActivity extends AppCompatActivity {
     private FirebaseFirestore DataBase;
     ArrayList<String> process = new ArrayList<>();
-   static Spinner s_process;
-   static boolean ChosenDateisRight=false;
+    static Spinner s_process;
+    static boolean ChosenDateisRight = false;
+    static String date = "";
 
-    private static final String TAG = "Process";
+    private static final String TAG = "ProcessActivity";
     public static TextView date_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_process);
-         ChosenDateisRight=false;
-       try {
+        ChosenDateisRight = false;
+        try {
             getSupportActionBar().hide();
         } catch (Exception e) {
             Log.d(TAG, "Can't hide the bar");
         }
 
+        findViewById(R.id.fabProcess).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // next up to next slots activity
+
+                SharedPreferences prefs = getSharedPreferences("MY_OWN_PREFERENCE", MODE_PRIVATE);
+                SharedPreferences.Editor edit = prefs.edit();
+                Spinner spinner = findViewById(R.id.process_spinner);
+                String selectedProcess = spinner.getSelectedItem().toString();
+
+                edit.putString("service", selectedProcess);
+                edit.putString("date", date);
+
+                if (edit.commit()) {
+                    overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                    startActivity(new Intent(ProcessActivity.this, SlotsActivity.class));
+                }
+            }
+        });
+
         DataBase = FirebaseFirestore.getInstance();
         s_process = findViewById(R.id.process_spinner);
         s_process.setEnabled(false);
 
-        DataBase.collection("Services").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-        {
+        DataBase.collection("Services").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         process.add(document.getId());
-
-
-
-
                     }
                     getprocess(process);
                     //s_process.setEnabled(true);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
-
-
             }
         });
-       s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
 
@@ -85,20 +101,19 @@ public class ProcessActivity extends AppCompatActivity {
                 String selectedprocess = spinner.getSelectedItem().toString();
 
 
-// ..
-         DataBase=FirebaseFirestore.getInstance();
+                DataBase = FirebaseFirestore.getInstance();
                 DocumentReference docRef = DataBase.collection("Services").document(selectedprocess);
 
 
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()&&ChosenDateisRight) {
+                        if (task.isSuccessful() && ChosenDateisRight) {
                             DocumentSnapshot document = task.getResult();
                             if (document != null && document.exists()) {
                                 Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                                Services name =new Services();
-                                name.Information=(String)document.get("Information");
+                                Services name = new Services();
+                                name.Information = (String) document.get("Information");
                                 TextView tv = findViewById(R.id.text_process);
                                 tv.setText(name.Information);
 
@@ -121,6 +136,18 @@ public class ProcessActivity extends AppCompatActivity {
                 // have to be implemented to create an OnItemSelectedListener
             }
         });
+
+
+        Spinner s_process = findViewById(R.id.process_spinner);
+
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.Banks, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        s_process.setAdapter(adapter);
 
 
         date_text = findViewById(R.id.txtDate);
@@ -156,16 +183,15 @@ public class ProcessActivity extends AppCompatActivity {
         */
     }
 
-    public final void getprocess(List<String> processes)
-    {
+    public final void getprocess(List<String> processes) {
         ArrayAdapter Adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, processes);
         s_process.setAdapter(Adapter);
 
     }
 
 
-
     public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -226,8 +252,8 @@ public class ProcessActivity extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the chosen date
-            TextView tv = (TextView) getActivity().findViewById(R.id.txtDate);
-            int actualMonth = month+1; // Because month index start from zero
+            TextView tv = getActivity().findViewById(R.id.txtDate);
+            int actualMonth = month + 1; // Because month index start from zero
             // Display the unformatted date to TextView
 
 
@@ -237,10 +263,9 @@ public class ProcessActivity extends AppCompatActivity {
             cal.set(year, month, day, 0, 0, 0);
             Date chosenDate = cal.getTime();
 
-           // SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
-           // Date date = new Date(year, month, day-1);
-           // String dayOfWeek = simpledateformat.format(date);
-
+            // SimpleDateFormat simpledateformat = new SimpleDateFormat("EEEE");
+            // Date date = new Date(year, month, day-1);
+            // String dayOfWeek = simpledateformat.format(date);
 
 
             // Format the date using style full
@@ -249,29 +274,22 @@ public class ProcessActivity extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
             Date d_name = chosenDate;
             String dayOfTheWeek = sdf.format(d_name);
-            if(dayOfTheWeek.equals("Friday") || dayOfTheWeek.equals("Saturday"))
-            {
+            if (dayOfTheWeek.equals("Friday") || dayOfTheWeek.equals("Saturday")) {
                 tv.setText("!!! Choose any date except(Friday,Saturday)");
                 tv.setTextColor(Color.parseColor("#F57C00"));
                 tv.setTextSize(12);
                 s_process.setEnabled(false);
-                ChosenDateisRight=false;
+                ChosenDateisRight = false;
                 TextView tv1 = getActivity().findViewById(R.id.text_process);
                 tv1.setText("");
-
-
-
-            }
-
-            else
-            {
+            } else {
                 // Display the formatted date
                 tv.setTextColor(Color.parseColor("#3F51B5"));
                 tv.setTextSize(20);
-                tv.setText("Choosen date:"  + "\n");
-                tv.setText(tv.getText() + df_full_str);
+                tv.setText("Choosen date:" + "\n" + df_full_str);
                 s_process.setEnabled(true);
-                ChosenDateisRight=true;
+                ChosenDateisRight = true;
+                date = android.text.format.DateFormat.format("yyyyMMdd", chosenDate).toString();
             }
         }
     }

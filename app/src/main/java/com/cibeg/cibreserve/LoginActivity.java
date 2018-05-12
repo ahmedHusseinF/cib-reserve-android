@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
         LoginAuth = FirebaseAuth.getInstance();
 
+
         if(LoginAuth.getCurrentUser() != null)
             startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
 
@@ -82,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         Log.d(TAG, "Login");
 
         // debug purpose only
-        onLoginSuccess();
+        //onLoginSuccess();
 
 
         if (!validate()) {
@@ -99,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         String email = _emailText.getText().toString();
-        final String password = _passwordText.getText().toString();
+        String password = _passwordText.getText().toString();
 
 
         LoginAuth.signInWithEmailAndPassword(email, password)
@@ -127,9 +128,6 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-
                 Object[] Info;
                 Info = data.getCategories().toArray();
                 LoginAuth.signInWithEmailAndPassword(Info[0].toString(), Info[1].toString());
@@ -154,7 +152,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginFailed() {
         Toast.makeText(getBaseContext(), "Please submit the data according to the requirements", Toast.LENGTH_LONG).show();
-
         _loginButton.setEnabled(true);
     }
 
