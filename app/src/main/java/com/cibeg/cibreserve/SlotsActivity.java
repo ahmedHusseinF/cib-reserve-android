@@ -3,8 +3,8 @@ package com.cibeg.cibreserve;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +19,8 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +31,7 @@ import java.util.ArrayList;
 public class SlotsActivity extends AppCompatActivity {
     private static String TAG = "SlotsActivity";
     ProgressDialog progressDialog;
-    ArrayList<RadioGroup> radiosArray = new ArrayList<>();
+    ArrayList<RadioButton> radiosArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,22 +115,15 @@ public class SlotsActivity extends AppCompatActivity {
                 String end = "";
 
                 for(int i=0;i<radiosArray.size();i++){
-                    if(radiosArray.get(i).getCheckedRadioButtonId() != -1){
-                       int id = radiosArray.get(i).getCheckedRadioButtonId();
-
-                        String value = ((RadioButton)findViewById(id)).getText().toString();
-
-                        String[] startEnd = value.split("-");
-
-                        start = startEnd[0];
-                        end = startEnd[1];
-                    }
+                    // hhhhh
                 }
 
                 if(start.isEmpty()){
                     Toast.makeText(SlotsActivity.this, "Please select a slot first...", Toast.LENGTH_LONG).show();
                 }
 
+
+                // reserve the thing
                 AndroidNetworking
                         .post("https://e7gz.herokuapp.com/reserveTimeSlot")
                         .addBodyParameter("branch", branch)
@@ -168,6 +159,7 @@ public class SlotsActivity extends AppCompatActivity {
     }
 
 
+
     private void populateSlots(JSONArray slots) throws JSONException {
 
         int top = 0;
@@ -190,30 +182,27 @@ public class SlotsActivity extends AppCompatActivity {
 
             RadioGroup rdg = view.findViewById(R.id.slot_time_insert);
             rdg.setId(View.generateViewId());
-            radiosArray.add(rdg);
 
 
-
-            rdg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                    for (int l = 0; l < radiosArray.size(); l++) {
-                        if(group.getId() == radiosArray.get(l).getId())
-                            continue;
-
-                        if(radiosArray.get(l).getCheckedRadioButtonId() == -1)
-                            continue;
-
-                        radiosArray.get(l).clearCheck();
-                    }
-                }
-            });
             for (int j = 0; j < timeSlots.length(); j++) {
-                RadioButton rdb = (RadioButton) getLayoutInflater().inflate(R.layout.radio_button_item, null);
+                final RadioButton rdb = (RadioButton) getLayoutInflater().inflate(R.layout.radio_button_item, null);
                 JSONObject aSlot = timeSlots.getJSONObject(j);
                 rdb.setId(j);
                 rdb.setText(aSlot.getString("start") + " - " + aSlot.getString("end"));
+                radiosArray.add(rdb);
+                rdb.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        for(int i=0; i<radiosArray.size() ;i++){
+                            if(radiosArray.get(i).getId() == view.getId()){
+                                ((RadioButton) view).setChecked(true);
+                            }else {
+                                ((RadioButton) view).setChecked(false);
+                            }
+                        }
+                    }
+                });
                 rdg.addView(rdb, j);
             }
 

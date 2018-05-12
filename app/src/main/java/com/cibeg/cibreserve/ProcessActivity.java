@@ -98,8 +98,9 @@ public class ProcessActivity extends AppCompatActivity {
         s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-                findViewById(R.id.fabProcess).setEnabled(true);
-
+                if(ChosenDateisRight) {
+                    findViewById(R.id.fabProcess).setEnabled(true);
+                }
                 Spinner spinner = findViewById(R.id.process_spinner);
                 String selectedprocess = spinner.getSelectedItem().toString();
 
@@ -282,6 +283,7 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setTextColor(Color.parseColor("#F57C00"));
                 tv.setTextSize(12);
                 s_process.setEnabled(false);
+                getActivity().findViewById(R.id.fabProcess).setEnabled(false);
                 ChosenDateisRight = false;
                 TextView tv1 = getActivity().findViewById(R.id.text_process);
                 tv1.setText("");
