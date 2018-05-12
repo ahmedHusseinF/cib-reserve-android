@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="@style/AppTheme.Light"
+    android:background="@color/white"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:fitsSystemWindows="true">
@@ -22,7 +23,7 @@
                 android:id="@+id/button_backToBranches"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="#F57C00"
+                android:background="@color/white"
                 app:srcCompat="?android:attr/actionModeCloseDrawable" />
 
 
@@ -31,7 +32,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
-                android:background="#F57C00"
+                android:background="@color/white"
                 app:srcCompat="@drawable/checkmark" />
 
 
@@ -107,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Change Password"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textColor="@color/black"
 
             />
@@ -117,8 +118,20 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:background="#F57C00"
+        android:background="@color/white"
         app:srcCompat="@drawable/ic_settings_black_24dp" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_logout"
+        android:layout_below="@id/button_changePassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:padding="5dp"
+        android:layout_alignParentBottom="true"
+
+        android:text="Logout"/>
 
 </RelativeLayout>
 

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
     @BindView(R.id.new_mobile) EditText new_mobileText;
     @BindView(R.id.button_changePassword) ImageButton  _changePasswordButton;
     @BindView(R.id.button_saveInformation) ImageButton _saveInformation;
+    @BindView(R.id.btn_logout) Button _logout;
 
 
 
@@ -65,13 +67,21 @@ public class SettingsActivity extends AppCompatActivity {
         new_nameText = findViewById(R.id.new_name);
         new_addressText = findViewById(R.id.new_address);
         new_mobileText = findViewById(R.id.new_mobile);
-
+        _logout=findViewById(R.id.btn_logout);
 
         _changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                boolean s= changeinfo();
                if(s){ startActivity(new Intent(SettingsActivity.this, ChangePassword.class));}
+            }
+        });
+
+        _logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               LoginAuth.signOut();
+               startActivity(new Intent(SettingsActivity.this, LoginActivity.class));
             }
         });
 
@@ -91,6 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingsActivity.this, BranchesActivity.class));
             }
         });
+
 
 
 
@@ -146,7 +157,6 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Changing Information...");
         progressDialog.show();
-
         final String email= LoginAuth.getCurrentUser().getEmail();
         final String name = new_nameText.getText().toString();
         final String address = new_addressText.getText().toString();
