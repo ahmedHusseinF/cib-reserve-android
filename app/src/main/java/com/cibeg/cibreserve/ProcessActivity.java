@@ -120,6 +120,7 @@ public class ProcessActivity extends AppCompatActivity {
                                 name.Information = (String) document.get("Information");
                                 TextView tv = findViewById(R.id.text_process);
                                 tv.setText(name.Information);
+                                findViewById(R.id.fabProcess).setEnabled(true);
 
                             } else {
                                 Log.d(TAG, "No such document");
@@ -293,6 +294,7 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setTextSize(20);
                 tv.setText("Choosen date:" + "\n" + df_full_str);
                 s_process.setEnabled(true);
+                getActivity().findViewById(R.id.fabProcess).setEnabled(true);
                 ChosenDateisRight = true;
                 date = android.text.format.DateFormat.format("yyyyMMdd", chosenDate).toString();
             }

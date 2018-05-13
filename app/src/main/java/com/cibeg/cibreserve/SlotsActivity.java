@@ -177,7 +177,7 @@ public class SlotsActivity extends AppCompatActivity {
 
             View view = inflater.inflate(R.layout.card_main, null);
             // fill in each card's data
-            view.setId(i + 1);
+            view.setId(i + 1 * 100);
             ((TextView) view.findViewById(R.id.card_main_title)).setText("Counter " + counter.getInt("counterId"));
 
             RadioGroup rdg = view.findViewById(R.id.slot_time_insert);
@@ -187,25 +187,24 @@ public class SlotsActivity extends AppCompatActivity {
             for (int j = 0; j < timeSlots.length(); j++) {
                 final RadioButton rdb = (RadioButton) getLayoutInflater().inflate(R.layout.radio_button_item, null);
                 JSONObject aSlot = timeSlots.getJSONObject(j);
-                rdb.setId(j);
+                rdb.setId(j* ((int) System.currentTimeMillis())*100);
                 rdb.setText(aSlot.getString("start") + " - " + aSlot.getString("end"));
                 radiosArray.add(rdb);
                 rdb.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                        for(int i=0; i<radiosArray.size() ;i++){
-                            if(radiosArray.get(i).getId() == view.getId()){
-                                ((RadioButton) view).setChecked(true);
+                        for (int k=0; k<radiosArray.size() ; k++) {
+                            if(radiosArray.get(k).getId() == view.getId()){
+                                radiosArray.get(k).setChecked(true);
                             }else {
-                                ((RadioButton) view).setChecked(false);
+                                radiosArray.get(k).setChecked(false);
                             }
                         }
                     }
                 });
                 rdg.addView(rdb, j);
             }
-
 
             view.setLayoutParams(lp);
             insertSlotsHere.addView(view);
