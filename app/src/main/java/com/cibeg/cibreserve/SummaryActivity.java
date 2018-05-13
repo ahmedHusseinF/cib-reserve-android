@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class SummaryActivity extends AppCompatActivity { // 5od screenshoot wngz w8
@@ -54,7 +55,10 @@ public class SummaryActivity extends AppCompatActivity { // 5od screenshoot wngz
         SimpleDateFormat fromUser = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH);
         String newDate = "";
         try {
-            newDate = fromUser.parse(date).toString();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(fromUser.parse(date));
+            newDate =  cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
