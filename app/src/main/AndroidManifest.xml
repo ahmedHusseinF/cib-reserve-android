@@ -18,12 +18,16 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".ProcessActivity" />
-        <activity android:name=".SlotsActivity"/>
+        <activity android:name=".SlotsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ChangePassword" />
+        <activity android:name=".SummaryActivity"></activity>
     </application>
 
 </manifest>

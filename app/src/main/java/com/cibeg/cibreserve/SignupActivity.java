@@ -84,6 +84,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Finish the registration screen and return to the Login activity
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                LoginAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 finish();
             }

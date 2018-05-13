@@ -16,22 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/img_main_card_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/material_design_2"
-            android:contentDescription="Main Counter Image"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/card_main_title"
             style="@style/TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_main_card_1"
             android:layout_marginEnd="@dimen/card_title_margin"
             android:layout_marginStart="@dimen/card_title_margin"
             android:layout_marginTop="@dimen/card_title_margin_top"

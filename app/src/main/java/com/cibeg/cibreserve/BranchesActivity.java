@@ -9,18 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
-
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +45,19 @@ public class BranchesActivity extends AppCompatActivity {
             Log.d(TAG, "Can't hide the bar");
         }
 
+        // Go to Setting when the user clicks on the edit button
+        ImageButton B = findViewById(R.id.EditButton);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                startActivity(new Intent(BranchesActivity.this, SettingsActivity.class));
+                finish();
+
+            }
+        });
+
         DataBase = FirebaseFirestore.getInstance();
 
         s_banks = findViewById(R.id.banks_spinner);
@@ -59,6 +71,8 @@ public class BranchesActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         s_banks.setAdapter(adapter);
+
+        findViewById(R.id.fab).setEnabled(false);
 
 
         s_branches.setEnabled(false); // disable the branches list until we get the data
@@ -124,6 +138,9 @@ public class BranchesActivity extends AppCompatActivity {
                                 tv.setText("Address:" + BParam.Address + "\n" + "Area:" + BParam.Area + "\n" + "City:" + BParam.City +
                                         "\n" + "Working Days:" + BParam.Working_Days + "\n" + "Working Hours:" + BParam.Working_Hours);
 
+
+                                findViewById(R.id.fab).setEnabled(true);
+
                             } else {
                                 Log.d(TAG, "No such document");
                             }
@@ -150,8 +167,6 @@ public class BranchesActivity extends AppCompatActivity {
                 Spinner spinner = findViewById(R.id.branches_spinner);
                 String selectedBranch = spinner.getSelectedItem().toString();
 
-
-                s_branches.setEnabled(false); // disable the branches list until we get the data
 
                 edit.putString("branch", selectedBranch);
 

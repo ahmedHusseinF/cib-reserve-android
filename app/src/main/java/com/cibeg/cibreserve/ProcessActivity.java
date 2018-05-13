@@ -53,6 +53,8 @@ public class ProcessActivity extends AppCompatActivity {
             Log.d(TAG, "Can't hide the bar");
         }
 
+        findViewById(R.id.fabProcess).setEnabled(false);
+
         findViewById(R.id.fabProcess).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +94,11 @@ public class ProcessActivity extends AppCompatActivity {
                 }
             }
         });
+
         s_process.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
-
+                findViewById(R.id.fabProcess).setEnabled(true);
 
                 Spinner spinner = findViewById(R.id.process_spinner);
                 String selectedprocess = spinner.getSelectedItem().toString();

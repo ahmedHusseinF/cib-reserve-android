@@ -51,9 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         LoginAuth = FirebaseAuth.getInstance();
 
 
+
         if(LoginAuth.getCurrentUser() != null)
             startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
-
 
         _loginButton = findViewById(R.id.btn_login);
         _passwordText = findViewById(R.id.input_password);
