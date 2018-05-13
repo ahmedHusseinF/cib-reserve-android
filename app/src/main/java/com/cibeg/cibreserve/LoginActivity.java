@@ -53,11 +53,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
         SharedPreferences prefs = getSharedPreferences("MY_OWN_PREFERENCE", MODE_PRIVATE);
-        prefs.getBoolean("haveReservation", false);
+        boolean haveRes=prefs.getBoolean("haveReservation", false);
 
-        if(LoginAuth.getCurrentUser() != null)
-            startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
-
+        if(LoginAuth.getCurrentUser() != null) {
+            if(haveRes) {
+                startActivity(new Intent(LoginActivity.this, SummaryActivity.class));
+            }
+            else{ startActivity(new Intent(LoginActivity.this, BranchesActivity.class));}
+        }
         _loginButton = findViewById(R.id.btn_login);
         _passwordText = findViewById(R.id.input_password);
         _emailText = findViewById(R.id.input_email);
@@ -87,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // debug purpose only
 
-       onLoginSuccess();
+       //onLoginSuccess();
 
 
 
@@ -151,7 +154,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
-        startActivity(new Intent(LoginActivity.this, BranchesActivity.class));
+        SharedPreferences prefs = getSharedPreferences("MY_OWN_PREFERENCE", MODE_PRIVATE);
+        boolean haveRes=prefs.getBoolean("haveReservation", false);
+        if(haveRes) {
+            startActivity(new Intent(LoginActivity.this, SummaryActivity.class));
+        }
+        else{ startActivity(new Intent(LoginActivity.this, BranchesActivity.class));}
         finish();
     }
 

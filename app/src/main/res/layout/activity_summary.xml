@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".SummaryActivity">
 
     <ImageView
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:textColor="@color/primary"
-        android:text="Bank :"
+        android:text="Bank : "
         android:textSize="25sp" />
 
     <TextView
@@ -32,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/accent"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:text=""
         android:layout_marginTop="15dp"
         android:layout_below="@id/summary_logo"
@@ -45,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Branch:"
+        android:text="Branch: "
         android:textSize="25sp" />
 
     <TextView
@@ -55,7 +56,7 @@
         android:textColor="@color/accent"
         android:layout_marginTop="15dp"
         android:text=""
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_below="@id/sum_bank_label"
         android:layout_toEndOf="@id/sum_branch_label"/>
 
@@ -66,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Date :"
+        android:text="Date : "
         android:textSize="25sp" />
 
     <TextView
@@ -76,7 +77,7 @@
         android:textColor="@color/accent"
         android:text=""
         android:layout_marginTop="15dp"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_below="@id/sum_branch_label"
         android:layout_toEndOf="@id/sum_date_label"/>
 
@@ -87,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Process :"
+        android:text="Process : "
         android:textSize="25sp" />
 
     <TextView
@@ -97,17 +98,17 @@
         android:textColor="@color/accent"
         android:text=""
         android:layout_marginTop="15dp"
-        android:textSize="20sp"
-        android:layout_below="@id/sum_date_label"
-        android:layout_toEndOf="@id/sum_process_label"/>
+        android:textSize="25sp"
+        android:layout_below="@id/sum_process_label"
+        />
     <TextView
         android:id="@+id/sum_start_label"
         android:textColor="@color/primary"
-        android:layout_below="@id/sum_process_label"
+        android:layout_below="@id/sum_process_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Start time :"
+        android:text="Start time : "
         android:textSize="25sp" />
 
     <TextView
@@ -117,8 +118,8 @@
         android:textColor="@color/accent"
         android:text=""
         android:layout_marginTop="15dp"
-        android:textSize="20sp"
-        android:layout_below="@id/sum_process_label"
+        android:textSize="25sp"
+        android:layout_below="@id/sum_process_name"
         android:layout_toEndOf="@id/sum_start_label"/>
 
     <TextView
@@ -128,7 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="End time :"
+        android:text="End time : "
         android:textSize="25sp" />
 
     <TextView
@@ -138,19 +139,42 @@
         android:textColor="@color/accent"
         android:text=""
         android:layout_marginTop="15dp"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_below="@id/sum_start_label"
         android:layout_toEndOf="@id/sum_end_label"/>
 
+
+    <TextView
+        android:id="@+id/sum_counter_label"
+        android:textColor="@color/primary"
+        android:layout_below="@id/sum_end_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Counter : "
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/sum_counter_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:textSize="25sp"
+        android:layout_below="@id/sum_end_label"
+        android:layout_toEndOf="@id/sum_counter_label"/>
 
 
 
     <Button
         android:id="@+id/cancel_button"
-        android:layout_below="@id/sum_start_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/CancelButton"
+        android:layout_alignParentBottom="true"
+        android:background="@color/primary"
+        android:padding="12dp"
+        android:layout_margin="12dp"
         android:layout_marginTop="50dp"
         android:text="Cancel"/>
 </RelativeLayout>

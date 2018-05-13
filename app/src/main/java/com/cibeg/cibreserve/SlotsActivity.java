@@ -110,7 +110,7 @@ public class SlotsActivity extends AppCompatActivity {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean("haveReservation", true);
                 edit.apply();
-
+                String counterId=prefs.getString("counterId","1");
                 String start = "";
                 String end = "";
 
@@ -118,6 +118,7 @@ public class SlotsActivity extends AppCompatActivity {
                     if(radiosArray.get(i).isChecked()){
                         start = radiosArray.get(i).getText().toString().split("-")[0];
                         end = radiosArray.get(i).getText().toString().split("-")[1];
+
                         break; // get only radio button
                     }
                 }
@@ -128,6 +129,7 @@ public class SlotsActivity extends AppCompatActivity {
                 }
 
                 SharedPreferences.Editor edits = prefs.edit();
+
                 edits.putString("start", start);
                 edits.putString("end", end);
                 edits.apply();
@@ -138,9 +140,12 @@ public class SlotsActivity extends AppCompatActivity {
                         .addBodyParameter("branch", branch)
                         .addBodyParameter("bank", bank)
                         .addBodyParameter("clientId", clientId)
-                        .addBodyParameter("service", service.trim())
+                        .addBodyParameter("service", service)
                         .addBodyParameter("start", start)
                         .addBodyParameter("end", end)
+                        .addBodyParameter("date",date)
+                        .addBodyParameter("counterId",counterId)
+                        .addBodyParameter("notes","")
                         .setTag(this)
                         .setPriority(Priority.LOW)
                         .build()
@@ -148,6 +153,7 @@ public class SlotsActivity extends AppCompatActivity {
                                             @Override
                                             public void onResponse(String response) {
                                                 try {
+                                                    Toast.makeText(SlotsActivity.this,response , Toast.LENGTH_LONG).show();
                                                     startActivity(new Intent(SlotsActivity.this, SummaryActivity.class));
                                                 } catch (Exception e) {
                                                     Log.e(TAG, e.getMessage());
@@ -189,6 +195,8 @@ public class SlotsActivity extends AppCompatActivity {
             view.setId(i + 1 * 100);
             ((TextView) view.findViewById(R.id.card_main_title)).setText("Counter " + counter.getInt("counterId"));
 
+
+
             RadioGroup rdg = view.findViewById(R.id.slot_time_insert);
             rdg.setId(View.generateViewId());
 
@@ -198,6 +206,7 @@ public class SlotsActivity extends AppCompatActivity {
                 JSONObject aSlot = timeSlots.getJSONObject(j);
                 rdb.setId((j + 1)* ((int) System.currentTimeMillis())*100);
                 rdb.setText(aSlot.getString("start") + " - " + aSlot.getString("end"));
+                rdb.setHint(counter.getString("counterId"));
                 radiosArray.add(rdb);
                 rdb.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,6 +215,11 @@ public class SlotsActivity extends AppCompatActivity {
                         for (int k=0; k<radiosArray.size() ; k++) {
                             if(radiosArray.get(k).getId() == view.getId()){
                                 radiosArray.get(k).setChecked(true);
+                                Toast.makeText(SlotsActivity.this, "Counter " + radiosArray.get(k).getHint().toString(), Toast.LENGTH_SHORT).show();
+                                SharedPreferences prefs = getSharedPreferences("MY_OWN_PREFERENCE", MODE_PRIVATE);
+                                SharedPreferences.Editor edits = prefs.edit();
+                                edits.putString("counterId", radiosArray.get(k).getHint().toString());
+                                edits.apply();
                             }else {
                                 radiosArray.get(k).setChecked(false);
                             }

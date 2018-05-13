@@ -180,6 +180,15 @@ public class BranchesActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory( Intent.CATEGORY_HOME );
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(homeIntent);
+        finish();
+    }
+
     public final void getbranch(List<String> BankBranches) {
         ArrayAdapter Adapter = new ArrayAdapter(this,
                 android.R.layout.simple_spinner_dropdown_item,
