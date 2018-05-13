@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".SummaryActivity">
 
     <ImageView
@@ -18,67 +19,135 @@
 
     <TextView
         android:id="@+id/sum_bank_label"
-        android:textColor="@android:color/black"
         android:layout_below="@id/summary_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:textColor="@color/primary"
         android:text="Bank :"
-        android:textSize="30sp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/sum_bank_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
-        android:textSize="30sp"
+        android:textColor="@color/accent"
+        android:textSize="20sp"
+        android:text=""
         android:layout_marginTop="15dp"
         android:layout_below="@id/summary_logo"
         android:layout_toEndOf="@id/sum_bank_label"/>
 
     <TextView
         android:id="@+id/sum_branch_label"
-        android:textColor="@android:color/black"
+        android:textColor="@color/primary"
         android:layout_below="@id/sum_bank_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:text="Branch :"
-        android:textSize="30sp" />
+        android:text="Branch:"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/sum_branch_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@color/accent"
         android:layout_marginTop="15dp"
-        android:textSize="30sp"
+        android:text=""
+        android:textSize="20sp"
         android:layout_below="@id/sum_bank_label"
-        android:layout_toEndOf="@id/sum_bank_label"/>
+        android:layout_toEndOf="@id/sum_branch_label"/>
 
     <TextView
         android:id="@+id/sum_date_label"
-        android:textColor="@android:color/black"
+        android:textColor="@color/primary"
         android:layout_below="@id/sum_branch_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="Date :"
-        android:textSize="30sp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/sum_date_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@color/accent"
+        android:text=""
         android:layout_marginTop="15dp"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:layout_below="@id/sum_branch_label"
-        android:layout_toEndOf="@id/sum_bank_label"/>
+        android:layout_toEndOf="@id/sum_date_label"/>
+
+    <TextView
+        android:id="@+id/sum_process_label"
+        android:textColor="@color/primary"
+        android:layout_below="@id/sum_date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Process :"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/sum_process_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:layout_below="@id/sum_date_label"
+        android:layout_toEndOf="@id/sum_process_label"/>
+    <TextView
+        android:id="@+id/sum_start_label"
+        android:textColor="@color/primary"
+        android:layout_below="@id/sum_process_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Start time :"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/sum_start_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:layout_below="@id/sum_process_label"
+        android:layout_toEndOf="@id/sum_start_label"/>
+
+    <TextView
+        android:id="@+id/sum_end_label"
+        android:textColor="@color/primary"
+        android:layout_below="@id/sum_start_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="End time :"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/sum_end_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/accent"
+        android:text=""
+        android:layout_marginTop="15dp"
+        android:textSize="20sp"
+        android:layout_below="@id/sum_start_label"
+        android:layout_toEndOf="@id/sum_end_label"/>
+
+
+
 
     <Button
         android:id="@+id/cancel_button"
-        android:layout_below="@id/sum_date_label"
+        android:layout_below="@id/sum_start_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/CancelButton"

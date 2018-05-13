@@ -276,6 +276,7 @@ public class ProcessActivity extends AppCompatActivity {
             // Format the date using style full
             DateFormat df_full = DateFormat.getDateInstance(DateFormat.FULL);
             String df_full_str = df_full.format(chosenDate);
+
             SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
             Date d_name = chosenDate;
             String dayOfTheWeek = sdf.format(d_name);
@@ -293,6 +294,7 @@ public class ProcessActivity extends AppCompatActivity {
                 tv.setTextColor(Color.parseColor("#3F51B5"));
                 tv.setTextSize(20);
                 tv.setText("Choosen date:" + "\n" + df_full_str);
+
                 s_process.setEnabled(true);
                 getActivity().findViewById(R.id.fabProcess).setEnabled(true);
                 ChosenDateisRight = true;

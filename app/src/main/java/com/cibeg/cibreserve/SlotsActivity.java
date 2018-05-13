@@ -115,13 +115,22 @@ public class SlotsActivity extends AppCompatActivity {
                 String end = "";
 
                 for(int i=0;i<radiosArray.size();i++){
-                    // hhhhh
+                    if(radiosArray.get(i).isChecked()){
+                        start = radiosArray.get(i).getText().toString().split("-")[0];
+                        end = radiosArray.get(i).getText().toString().split("-")[1];
+                        break; // get only radio button
+                    }
                 }
 
                 if(start.isEmpty()){
                     Toast.makeText(SlotsActivity.this, "Please select a slot first...", Toast.LENGTH_LONG).show();
+                    return;
                 }
 
+                SharedPreferences.Editor edits = prefs.edit();
+                edits.putString("start", start);
+                edits.putString("end", end);
+                edits.apply();
 
                 // reserve the thing
                 AndroidNetworking
