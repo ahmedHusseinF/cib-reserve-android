@@ -187,7 +187,7 @@ public class SlotsActivity extends AppCompatActivity {
             for (int j = 0; j < timeSlots.length(); j++) {
                 final RadioButton rdb = (RadioButton) getLayoutInflater().inflate(R.layout.radio_button_item, null);
                 JSONObject aSlot = timeSlots.getJSONObject(j);
-                rdb.setId(j* ((int) System.currentTimeMillis())*100);
+                rdb.setId((j + 1)* ((int) System.currentTimeMillis())*100);
                 rdb.setText(aSlot.getString("start") + " - " + aSlot.getString("end"));
                 radiosArray.add(rdb);
                 rdb.setOnClickListener(new View.OnClickListener() {
