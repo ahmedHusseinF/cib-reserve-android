@@ -187,8 +187,8 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String reEnterPassword = _reEnterPasswordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 5) {
-            _nameText.setError("at least 5 characters");
+        if (name.isEmpty() || name.length() < 5 || name.matches("[0-9]+")) {
+            _nameText.setError("at least 5 charactersb");
             valid = false;
         } else {
             _nameText.setError(null);
